@@ -1,0 +1,15 @@
+.total-return.caretup i {
+  color: chartreuse;
+}
+
+.total-return.caretdown i {
+  color: crimson;
+}
+
+.cumulative-return.arrowup i {
+  color: chartreuse;
+}
+
+.cumulative-return.arrowdown i {
+  color: crimson;
+}
