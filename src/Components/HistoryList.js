@@ -1,5 +1,6 @@
 import React from 'react';
 import ListElement from './ListElement';
+import './HistoryList.css';
 
 const HistoryList = props => {
   const returns = props.returns.map(element => {

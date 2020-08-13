@@ -5,7 +5,7 @@ import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles({
   root: {
-    width: 300
+    width: 400
   }
 });
 
@@ -13,9 +13,9 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-export default function RangeSlider() {
+const RangeSlider = props => {
   const classes = useStyles();
-  const [value, setValue] = React.useState([20, 37]);
+  const [value, setValue] = React.useState([1926, 2019]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -23,16 +23,26 @@ export default function RangeSlider() {
 
   return (
     <div className={classes.root}>
-      <Typography id="range-slider" gutterBottom>
-        Temperature range
+      <Typography
+        id="range-slider"
+        style={{ textAlign: 'center' }}
+        gutterBottom
+      >
+        Slider
       </Typography>
       <Slider
         value={value}
+        defaultValue={props.yearsSelected}
+        min={props.yearsSelected[0]}
+        max={props.yearsSelected[1]}
         onChange={handleChange}
-        valueLabelDisplay="auto"
         aria-labelledby="range-slider"
+        valueLabelDisplay="auto"
         getAriaValueText={valuetext}
+        style={{ alignContent: 'center' }}
       />
     </div>
   );
-}
+};
+
+export default RangeSlider;

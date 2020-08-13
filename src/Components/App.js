@@ -1,11 +1,10 @@
 import React from 'react';
 import HistoryList from './HistoryList';
 import Loader from './Loader';
-import Slider from './Slider';
-import './App';
+import RangeSlider from './Slider';
 
 class App extends React.Component {
-  state = { returns: [] };
+  state = { returns: [], yearsSelected: [], currentTable: [] };
 
   componentDidMount() {
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
@@ -16,6 +15,12 @@ class App extends React.Component {
         // this.setState({ returns: contents.reverse() });
         this.setState({
           returns: contents.reverse()
+        });
+        this.setState({
+          yearsSelected: [
+            this.state.returns[0].year,
+            this.state.returns[this.state.returns.length - 1].year
+          ]
         });
         this.cumulativeReturns();
         console.log(this.state.returns);
@@ -45,32 +50,63 @@ class App extends React.Component {
         };
       }
     }
-    this.setState({ returns: temp });
+    this.setState({
+      returns: temp
+    });
   }
 
+  onSlide() {}
+
   renderContent() {
-    if (this.state.returns === undefined || this.state.returns.length === 0) {
-      return <Loader message="Fetching S&P 500 Data" />;
-    } else
-      return (
-        <div className="ui centered two column grid">
-          <div className="six wide column">
-            <div className="ui inverted segment">
-              <HistoryList returns={this.state.returns} />
-            </div>
-          </div>
-          <div className="six wide column">
-            <div className="ui inverted segment">
-              <Slider returns={this.state.returns} />
-            </div>
-          </div>
-        </div>
-      );
+    return this.state.returns === undefined ||
+      this.state.returns.length === 0 ? (
+      <Loader message="Fetching S&P 500 Data" />
+    ) : (
+      <HistoryList returns={this.state.returns} />
+    );
+  }
+
+  renderSlider() {
+    return this.state.returns === undefined ||
+      this.state.returns.length === 0 ? (
+      <div
+        className="ui inverted raised segment"
+        style={{ minHeight: '100px', backgroundColor: '#2B2B2B' }}
+      ></div>
+    ) : (
+      <div
+        className="ui inverted raised segment"
+        style={{ minHeight: '100px', backgroundColor: '#2B2B2B' }}
+      >
+        <RangeSlider
+          returns={this.state.returns}
+          yearsSelected={this.state.yearsSelected}
+        />
+      </div>
+    );
   }
 
   render() {
     return (
-      <div style={{ backgroundColor: '#262626' }}>{this.renderContent()}</div>
+      <div className="ui container" style={{ marginTop: '50px' }}>
+        <div className="ui centered two column grid">
+          <div className="eight wide column">
+            <div
+              className="ui inverted raised segment"
+              style={{ minHeight: '700px', backgroundColor: '#2B2B2B' }}
+            >
+              {this.renderContent()}
+            </div>
+          </div>
+          <div className="eight wide column">
+            {this.renderSlider()}
+            <div
+              className="ui inverted raised segment"
+              style={{ minHeight: '586px', backgroundColor: '#2B2B2B' }}
+            ></div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
