@@ -4,7 +4,7 @@ import Loader from './Loader';
 import RangeSlider from './Slider';
 
 class App extends React.Component {
-  state = { returns: [], yearsSelected: [], currentTable: [] };
+  state = { returns: [], yearsSelected: [], currentList: [] };
 
   componentDidMount() {
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
@@ -23,7 +23,6 @@ class App extends React.Component {
           ]
         });
         this.cumulativeReturns();
-        console.log(this.state.returns);
       });
   }
 
@@ -51,18 +50,26 @@ class App extends React.Component {
       }
     }
     this.setState({
-      returns: temp
+      returns: temp,
+      currentList: temp
     });
   }
 
-  onSlide() {}
+  onSlide = updateYears => {
+    this.setState({
+      currentList: this.state.returns.slice(
+        this.state.returns.findIndex(i => i.year === updateYears[0]),
+        this.state.returns.findIndex(i => i.year === updateYears[1]) + 1
+      )
+    });
+  };
 
   renderContent() {
     return this.state.returns === undefined ||
       this.state.returns.length === 0 ? (
       <Loader message="Fetching S&P 500 Data" />
     ) : (
-      <HistoryList returns={this.state.returns} />
+      <HistoryList currentList={this.state.currentList} />
     );
   }
 
@@ -81,6 +88,7 @@ class App extends React.Component {
         <RangeSlider
           returns={this.state.returns}
           yearsSelected={this.state.yearsSelected}
+          onSlide={this.onSlide}
         />
       </div>
     );
@@ -93,7 +101,7 @@ class App extends React.Component {
           <div className="eight wide column">
             <div
               className="ui inverted raised segment"
-              style={{ minHeight: '700px', backgroundColor: '#2B2B2B' }}
+              style={{ minHeight: '100px', backgroundColor: '#2B2B2B' }}
             >
               {this.renderContent()}
             </div>

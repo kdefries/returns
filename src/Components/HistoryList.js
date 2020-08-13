@@ -3,7 +3,7 @@ import ListElement from './ListElement';
 import './HistoryList.css';
 
 const HistoryList = props => {
-  const returns = props.returns.map(element => {
+  const currentList = props.currentList.map(element => {
     return <ListElement key={element.year} element={element} />;
   });
 
@@ -17,7 +17,7 @@ const HistoryList = props => {
             <th className="right aligned">Cumulative Returns</th>
           </tr>
         </thead>
-        <tbody>{returns}</tbody>
+        <tbody>{currentList}</tbody>
       </table>
     </div>
   );

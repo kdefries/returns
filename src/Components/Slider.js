@@ -18,6 +18,7 @@ const RangeSlider = props => {
   const [value, setValue] = React.useState([1926, 2019]);
 
   const handleChange = (event, newValue) => {
+    props.onSlide(newValue);
     setValue(newValue);
   };
 
@@ -32,6 +33,7 @@ const RangeSlider = props => {
       </Typography>
       <Slider
         value={value}
+        step={1}
         defaultValue={props.yearsSelected}
         min={props.yearsSelected[0]}
         max={props.yearsSelected[1]}
