@@ -1,6 +1,5 @@
 import React from 'react';
 import ListElement from './ListElement';
-import './HistoryList.css';
 
 const HistoryList = props => {
   const currentList = props.currentList.map(element => {
@@ -9,7 +8,10 @@ const HistoryList = props => {
 
   return (
     <div className="history-list">
-      <table className="ui selectable inverted table">
+      <table
+        className="ui selectable inverted table"
+        style={{ background: '#212121' }}
+      >
         <thead>
           <tr>
             <th>Year</th>
