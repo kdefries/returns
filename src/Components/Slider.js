@@ -18,8 +18,11 @@ const RangeSlider = props => {
   const [value, setValue] = React.useState([1926, 2019]);
 
   const handleChange = (event, newValue) => {
-    props.onSlide(newValue);
     setValue(newValue);
+  };
+
+  const updateYears = (event, value) => {
+    props.onSlide(value);
   };
 
   return (
@@ -38,6 +41,7 @@ const RangeSlider = props => {
         min={props.yearsSelected[0]}
         max={props.yearsSelected[1]}
         onChange={handleChange}
+        onChangeCommitted={updateYears}
         aria-labelledby="range-slider"
         valueLabelDisplay="auto"
         getAriaValueText={valuetext}
