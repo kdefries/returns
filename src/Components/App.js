@@ -22,35 +22,32 @@ class App extends React.Component {
             this.state.returns[this.state.returns.length - 1].year
           ]
         });
-        this.cumulativeReturns();
+        this.cumulativeReturns(this.state.returns);
       });
   }
 
-  cumulativeReturns() {
+  cumulativeReturns(array) {
     var temp = [];
 
-    for (let i = 0; i < this.state.returns.length; i++) {
+    for (let i = 0; i < array.length; i++) {
       if (i === 0) {
         temp[i] = {
-          year: this.state.returns[i].year,
-          totalReturn: this.state.returns[i].totalReturn,
-          cumulativeReturn: parseFloat(
-            this.state.returns[i].totalReturn
-          ).toFixed(2)
+          year: array[i].year,
+          totalReturn: array[i].totalReturn,
+          cumulativeReturn: parseFloat(array[i].totalReturn).toFixed(2)
         };
       } else {
         temp[i] = {
-          year: this.state.returns[i].year,
-          totalReturn: this.state.returns[i].totalReturn,
+          year: array[i].year,
+          totalReturn: array[i].totalReturn,
           cumulativeReturn: (
-            parseFloat(this.state.returns[i].totalReturn) +
+            parseFloat(array[i].totalReturn) +
             parseFloat(temp[i - 1].cumulativeReturn)
           ).toFixed(2)
         };
       }
     }
     this.setState({
-      returns: temp,
       currentList: temp
     });
   }
@@ -62,6 +59,7 @@ class App extends React.Component {
         this.state.returns.findIndex(i => i.year === updateYears[1]) + 1
       )
     });
+    this.cumulativeReturns(this.state.currentList);
   };
 
   renderContent() {
