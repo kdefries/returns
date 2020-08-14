@@ -71,20 +71,22 @@ class App extends React.Component {
         <Loader message="Fetching S&P 500 Data" />
       </div>
     ) : (
-      <HistoryList currentList={this.state.currentList} />
-    );
-  }
+      <div className="row">
+        <div
+          className="ui inverted raised segment"
+          style={{ minHeight: '100px', backgroundColor: '#212121' }}
+        >
+          <RangeSlider
+            returns={this.state.returns}
+            yearsSelected={this.state.yearsSelected}
+            onSlide={this.onSlide}
+          />
+        </div>
 
-  renderSlider() {
-    return this.state.returns === undefined ||
-      this.state.returns.length === 0 ? (
-      <div></div>
-    ) : (
-      <RangeSlider
-        returns={this.state.returns}
-        yearsSelected={this.state.yearsSelected}
-        onSlide={this.onSlide}
-      />
+        <div className="row">
+          <HistoryList currentList={this.state.currentList} />
+        </div>
+      </div>
     );
   }
 
@@ -107,20 +109,8 @@ class App extends React.Component {
             </div>
           </div>
         </h2>
-        <div className="ui centered two column grid">
-          <div className="eight wide column">{this.renderContent()}</div>
-          <div className="eight wide column">
-            <div
-              className="ui inverted raised segment"
-              style={{ minHeight: '100px', backgroundColor: '#212121' }}
-            >
-              {this.renderSlider()}
-            </div>
-            <div
-              className="ui inverted raised segment"
-              style={{ minHeight: '486px', backgroundColor: '#212121' }}
-            ></div>
-          </div>
+        <div className="ui centered grid">
+          <div className="sixteen wide column">{this.renderContent()}</div>
         </div>
       </div>
     );

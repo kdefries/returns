@@ -41,6 +41,7 @@ const RangeSlider = props => {
               onChange={handleChange}
               onChangeCommitted={updateYears}
               aria-labelledby="range-slider"
+              valueLabelDisplay="auto"
               getAriaValueText={valuetext}
             />
           </div>
