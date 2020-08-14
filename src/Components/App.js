@@ -19,35 +19,24 @@ class App extends React.Component {
           yearsSelected: [
             this.state.returns[0].year,
             this.state.returns[this.state.returns.length - 1].year
-          ]
+          ],
+          currentList: this.state.returns
         });
-        this.cumulativeReturns(this.state.returns);
+        this.cumulativeReturns();
       });
   }
 
-  cumulativeReturns(array) {
-    const temp = [];
-
-    for (let i = 0; i < array.length; i++) {
-      if (i === 0) {
-        temp[i] = {
-          year: array[i].year,
-          totalReturn: array[i].totalReturn,
-          cumulativeReturn: parseFloat(array[i].totalReturn).toFixed(2)
-        };
-      } else {
-        temp[i] = {
-          year: array[i].year,
-          totalReturn: array[i].totalReturn,
-          cumulativeReturn: (
-            parseFloat(array[i].totalReturn) +
-            parseFloat(temp[i - 1].cumulativeReturn)
-          ).toFixed(2)
-        };
-      }
-    }
+  cumulativeReturns() {
+    let total = 0.0;
     this.setState({
-      currentList: temp
+      currentList: this.state.currentList.map(element => {
+        total += parseFloat(element.totalReturn);
+        return {
+          year: element.year,
+          totalReturn: element.totalReturn,
+          cumulativeReturn: parseFloat(total).toFixed(2)
+        };
+      })
     });
   }
 
