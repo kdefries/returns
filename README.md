@@ -1,4 +1,4 @@
-## RetireUp Coding Test
+## Coding Test
 
 Single page app which shows a table similar to how it is displayed on [Slickcharts](https://www.slickcharts.com/sp500/returns). Table displayed with additional 'Cumulative Returns' and will update accordingly with movement of the slider.
 
